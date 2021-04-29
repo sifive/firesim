@@ -7,6 +7,7 @@ from awstools.awstools import *
 from fabric.api import *
 from fabric.contrib.project import rsync_project
 import time
+from util.streamlogger import InfoStreamLogger
 
 rootLogger = logging.getLogger()
 
@@ -336,7 +337,8 @@ class RunFarm:
 
         if not forceterminate:
             # --forceterminate was not supplied, so confirm with the user
-            userconfirm = raw_input("Type yes, then press enter, to continue. Otherwise, the operation will be cancelled.\n")
+            with InfoStreamLogger('stdout'):
+                userconfirm = raw_input("Type yes, then press enter, to continue. Otherwise, the operation will be cancelled.\n")
         else:
             userconfirm = "yes"
 

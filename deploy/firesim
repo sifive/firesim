@@ -83,7 +83,8 @@ def managerinit():
             rootLogger.debug(m)
             rootLogger.debug(m.stderr)
 
-    useremail = raw_input("If you are a new user, supply your email address [abc@xyz.abc] for email notifications (leave blank if you do not want email notifications): ")
+    with InfoStreamLogger('stdout'):
+        useremail = raw_input("If you are a new user, supply your email address [abc@xyz.abc] for email notifications (leave blank if you do not want email notifications): ")
     if useremail != "":
         subscribe_to_firesim_topic(useremail)
     else:
@@ -121,7 +122,8 @@ def buildafi(globalbuildconf):
     def terminate_instances_handler(sig, frame):
         """ Handler that prompts to terminate build instances if you press ctrl-c. """
         rootLogger.info("You pressed ctrl-c, so builds have been killed.")
-        userconfirm = raw_input("Do you also want to terminate your build instances? Type 'yes' to do so.\n")
+        with InfoStreamLogger('stdout'):
+            userconfirm = raw_input("Do you also want to terminate your build instances? Type 'yes' to do so.\n")
         if userconfirm == "yes":
             globalbuildconf.terminate_all_build_instances()
             rootLogger.info("Instances terminated. Please confirm in your AWS Management Console.")
